@@ -6,7 +6,7 @@
     "cse-scraper": "./cse_scraper.js"
   },
   "scripts": {
-    "start": "node cse_scraper.js"
+      "start": "node server.js"
   },
   "dependencies": {
     "express": "^5.1.0",

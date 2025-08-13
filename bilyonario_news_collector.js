@@ -4,17 +4,8 @@ import { setTimeout as delay } from "timers/promises";
 
 // Config
 const CX_ID = "675f8f5c0860940d8";
-const MAX_PAGES = 10;
+const MAX_PAGES = 3;
 
-// CLI arg
-const searchTerm = process.argv[2];
-if (!searchTerm) {
-    console.error("❌ Please provide a search term.");
-    console.log("Usage: node cse_scraper.js \"Areit\"");
-    process.exit(1);
-}
-
-// Random helpers
 const randomUserAgents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15",
@@ -42,7 +33,6 @@ async function scrapeCSE(query) {
         const searchUrl = `https://cse.google.com/cse?cx=${CX_ID}#gsc.tab=0&gsc.q=${encodeURIComponent(query)}&gsc.sort=&gsc.page=${pageNum}`;
         console.log(`\n🌐 Fetching page ${pageNum} → ${searchUrl}`);
 
-        // Human-like delay before visiting page
         await delay(randomBetween(3000, 6000));
 
         try {
@@ -63,14 +53,12 @@ async function scrapeCSE(query) {
 
                     return {
                         title: title.trim(),
-                        link: link,
+                        link,
                         snippet: snippet.trim(),
                         publisher,
                         publishedDate,
                         category
                     };
-
-
                 });
             });
 
@@ -81,7 +69,6 @@ async function scrapeCSE(query) {
             console.warn(`⚠️ Skipping page ${pageNum} due to error: ${err.message}`);
         }
 
-        // Delay before next page
         const waitTime = randomBetween(5000, 10000);
         console.log(`⏳ Waiting ${waitTime / 1000} seconds before next page...`);
         await delay(waitTime);
@@ -91,4 +78,7 @@ async function scrapeCSE(query) {
     return allResults;
 }
 
-return await scrapeCSE(searchTerm);
+// Export for API
+export async function runScraper(searchTerm) {
+    return await scrapeCSE(searchTerm);
+}
