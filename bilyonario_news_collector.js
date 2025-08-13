@@ -4,7 +4,7 @@ import { setTimeout as delay } from "timers/promises";
 
 // Config
 const CX_ID = "675f8f5c0860940d8";
-const MAX_PAGES = 3;
+const MAX_PAGES = 10;
 
 const randomUserAgents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
