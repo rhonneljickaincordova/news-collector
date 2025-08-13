@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  cse-scraper:
+    build: .
+    container_name: cse-scraper
+    stdin_open: true
+    tty: true
+    command: ["Areit"]  # Default query
